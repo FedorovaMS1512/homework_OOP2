@@ -4,13 +4,12 @@ from src.figure import Figure
 
 
 class Triangle(Figure):
-    a: int
-    b: int
-    c: int
 
     def __init__(self, a, b, c):
         if not (a + b > c and a + c > b and b + c > a):
             raise ValueError("Нельзя создать треугольник")
+        if a <= 0 or b <= 0 or c <= 0:
+            raise ValueError("Triangle sides can't be less than 0")
         self.a = a
         self.b = b
         self.c = c

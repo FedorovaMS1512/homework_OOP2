@@ -4,7 +4,7 @@ from src.figure import Figure
 
 
 class Circle(Figure):
-    r: int
+
 
     def __init__(self, r):
         if r <= 0:

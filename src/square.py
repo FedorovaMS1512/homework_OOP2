@@ -2,7 +2,7 @@ from src.figure import Figure
 
 
 class Square(Figure):
-    a: int
+
 
     def __init__(self, a):
         if a <= 0:

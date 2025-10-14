@@ -2,8 +2,6 @@ from src.figure import Figure
 
 
 class Rectangle(Figure):
-    a: int
-    b: int
 
     def __init__(self, a, b):
         if a <= 0 or b <= 0:
