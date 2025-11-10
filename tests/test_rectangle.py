@@ -1,4 +1,7 @@
 from src.rectangle import Rectangle
+from src.circle import Circle
+from src.triangle import Triangle
+from src.square import Square
 import pytest
 
 
@@ -36,3 +39,22 @@ def test_rectangle_invalid_sides(a, b, expected_exception, text_exception: str):
     with pytest.raises(expected_exception, match=text_exception):
         Rectangle(a, b)
 
+class TestCircleAddArea:
+    def test_circle_add_area(self):
+
+        circle = Circle(2)                     # площадь круга ≈ 12.566370614359172
+        triangle = Triangle(3, 4, 5)  # площадь треугольника = 6
+        rectangle = Rectangle(4, 6)       # площадь прямоугольника = 24
+        square = Square(5)                     # площадь квадрата = 25
+        another_circle = Circle(3)             # площадь второго круга ≈ 28.274333882308138
+
+        assert circle.add_area(triangle) == pytest.approx(18.57, abs=0.01)
+        assert circle.add_area(rectangle) == pytest.approx(36.57, abs=0.01)
+        assert circle.add_area(square) == pytest.approx(37.57, abs=0.01)
+        assert circle.add_area(another_circle) == pytest.approx(40.84, abs=0.01)
+
+    def test_rectangle_add_area_invalid_object(self):
+
+        rectangle = Rectangle(4, 6)
+        with pytest.raises(ValueError, match="Should be a Figure"):
+            rectangle.add_area("invalid object")
