@@ -14,7 +14,9 @@ import pytest
 )
 def test_triangle_area(a, b, c, area):
     t = Triangle(a, b, c)
-    assert (t.get_area == area), f"Area for triangle with sides {a}, {b}, {c} should be {area}"
+    assert (
+        t.get_area == area
+    ), f"Area for triangle with sides {a}, {b}, {c} should be {area}"
 
 
 @pytest.mark.parametrize(
@@ -26,16 +28,29 @@ def test_triangle_area(a, b, c, area):
 )
 def test_triangle_perimeter(a, b, c, perimeter):
     t = Triangle(a, b, c)
-    assert (t.get_perimeter == perimeter), f"Area for triangle with sides {a}, {b}, {c} should be {perimeter}"
+    assert (
+        t.get_perimeter == perimeter
+    ), f"Area for triangle with sides {a}, {b}, {c} should be {perimeter}"
 
 
 @pytest.mark.parametrize(
     ("a", "b", "c", "expected_exception", "text_exception"),
     [
-        pytest.param(-2, 4, 5, ValueError, "Triangle sides can't be less than 0", id='negative_side'),
-        pytest.param(0, 0, 0, ValueError, "Triangle sides can't be less than 0", id='zero_sides'),
-        pytest.param(1, 1, 3, ValueError, "Нельзя создать треугольник", id='invalid_triangle')
-    ]
+        pytest.param(
+            -2,
+            4,
+            5,
+            ValueError,
+            "Triangle sides can't be less than 0",
+            id="negative_side",
+        ),
+        pytest.param(
+            0, 0, 0, ValueError, "Triangle sides can't be less than 0", id="zero_sides"
+        ),
+        pytest.param(
+            1, 1, 3, ValueError, "Нельзя создать треугольник", id="invalid_triangle"
+        ),
+    ],
 )
 def test_triangle_invalid_sides(a, b, c, expected_exception, text_exception: str):
     with pytest.raises(expected_exception, match=text_exception):
@@ -45,10 +60,11 @@ def test_triangle_invalid_sides(a, b, c, expected_exception, text_exception: str
 class TestTriangleAddArea:
 
     def test_triangle_add_area(self):
-        triangle = Triangle(3, 4, 5)   # площадь треугольника = 6
-        rectangle = Rectangle(4, 6)      # площадь прямоугольника = 24
-        square = Square(5)                     # площадь квадрата = 25
-        circle = Circle(2)                     # площадь круга ≈ 12.566
+
+        triangle = Triangle(3, 4, 5)  # площадь треугольника = 6
+        rectangle = Rectangle(4, 6)  # площадь прямоугольника = 24
+        square = Square(5)  # площадь квадрата = 25
+        circle = Circle(2)  # площадь круга ≈ 12.566
         another_triangle = Triangle(6, 8, 10)  # площадь второго треугольника = 24
 
         assert triangle.add_area(rectangle) == 30
@@ -61,4 +77,3 @@ class TestTriangleAddArea:
         triangle = Triangle(4, 6, 8)
         with pytest.raises(ValueError, match="Should be a Figure"):
             triangle.add_area("invalid object")
-

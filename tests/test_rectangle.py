@@ -18,21 +18,28 @@ def test_rectangle_area(a, b, area):
 
 @pytest.mark.parametrize(
     ("a", "b", "perimeter"),
-    [
-     pytest.param(2, 4, 12, id="integer"),
-     pytest.param(2.2, 4.2, 12.8, id="float")
-     ],
+    [pytest.param(2, 4, 12, id="integer"), pytest.param(2.2, 4.2, 12.8, id="float")],
 )
 def test_rectangle_perimeter(a, b, perimeter):
     r = Rectangle(a, b)
-    assert (r.get_perimeter == perimeter), f"Perimeter for rectangle with sides {a} and {b} should be {perimeter}"
+    assert (
+        r.get_perimeter == perimeter
+    ), f"Perimeter for rectangle with sides {a} and {b} should be {perimeter}"
 
 
 @pytest.mark.parametrize(
     ("a", "b", "expected_exception", "text_exception"),
     [
-        pytest.param(0, 0, ValueError, "Rectangle sides can't be less than 0", id="zero_sides"),
-        pytest.param(-2, -4, ValueError, "Rectangle sides can't be less than 0", id="negative_side"),
+        pytest.param(
+            0, 0, ValueError, "Rectangle sides can't be less than 0", id="zero_sides"
+        ),
+        pytest.param(
+            -2,
+            -4,
+            ValueError,
+            "Rectangle sides can't be less than 0",
+            id="negative_side",
+        ),
     ],
 )
 def test_rectangle_invalid_sides(a, b, expected_exception, text_exception: str):
@@ -44,16 +51,31 @@ class TestCircleAddArea:
 
     def test_circle_add_area(self):
 
-        circle = Circle(2)                     # площадь круга ≈ 12.57
+        circle = Circle(2)  # площадь круга ≈ 12.57
         triangle = Triangle(3, 4, 5)  # площадь треугольника = 6
-        rectangle = Rectangle(4, 6)       # площадь прямоугольника = 24
-        square = Square(5)                     # площадь квадрата = 25
-        another_circle = Circle(3)             # площадь второго круга ≈ 28.27
+        rectangle = Rectangle(4, 6)  # площадь прямоугольника = 24
+        square = Square(5)  # площадь квадрата = 25
+        another_circle = Circle(3)  # площадь второго круга ≈ 28.27
 
         assert circle.add_area(triangle) == 18.57
         assert circle.add_area(rectangle) == 36.57
         assert circle.add_area(square) == 37.57
         assert circle.add_area(another_circle) == 40.84
+
+
+class TestCircleAddArea:
+    def test_circle_add_area(self):
+
+        circle = Circle(2)  # площадь круга ≈ 12.566370614359172
+        triangle = Triangle(3, 4, 5)  # площадь треугольника = 6
+        rectangle = Rectangle(4, 6)  # площадь прямоугольника = 24
+        square = Square(5)  # площадь квадрата = 25
+        another_circle = Circle(3)  # площадь второго круга ≈ 28.274333882308138
+
+        assert circle.add_area(triangle) == pytest.approx(18.57, abs=0.01)
+        assert circle.add_area(rectangle) == pytest.approx(36.57, abs=0.01)
+        assert circle.add_area(square) == pytest.approx(37.57, abs=0.01)
+        assert circle.add_area(another_circle) == pytest.approx(40.84, abs=0.01)
 
     def test_rectangle_add_area_invalid_object(self):
 
