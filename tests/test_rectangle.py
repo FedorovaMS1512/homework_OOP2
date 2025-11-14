@@ -47,35 +47,19 @@ def test_rectangle_invalid_sides(a, b, expected_exception, text_exception: str):
         Rectangle(a, b)
 
 
-class TestCircleAddArea:
+class TestRectangleAddArea:
 
-    def test_circle_add_area(self):
-
-        circle = Circle(2)  # площадь круга ≈ 12.57
-        triangle = Triangle(3, 4, 5)  # площадь треугольника = 6
-        rectangle = Rectangle(4, 6)  # площадь прямоугольника = 24
-        square = Square(5)  # площадь квадрата = 25
-        another_circle = Circle(3)  # площадь второго круга ≈ 28.27
-
-        assert circle.add_area(triangle) == 18.57
-        assert circle.add_area(rectangle) == 36.57
-        assert circle.add_area(square) == 37.57
-        assert circle.add_area(another_circle) == 40.84
-
-
-class TestCircleAddArea:
-    def test_circle_add_area(self):
-
-        circle = Circle(2)  # площадь круга ≈ 12.566370614359172
-        triangle = Triangle(3, 4, 5)  # площадь треугольника = 6
-        rectangle = Rectangle(4, 6)  # площадь прямоугольника = 24
-        square = Square(5)  # площадь квадрата = 25
-        another_circle = Circle(3)  # площадь второго круга ≈ 28.274333882308138
-
-        assert circle.add_area(triangle) == pytest.approx(18.57, abs=0.01)
-        assert circle.add_area(rectangle) == pytest.approx(36.57, abs=0.01)
-        assert circle.add_area(square) == pytest.approx(37.57, abs=0.01)
-        assert circle.add_area(another_circle) == pytest.approx(40.84, abs=0.01)
+    @pytest.mark.parametrize(
+        "rectangle, some_figure, expected_area",
+        [
+            (Rectangle(4, 6), Circle(2), 36.57),
+            (Rectangle(4, 6), Triangle(3, 4, 5), 30),
+            (Rectangle(4, 6), Square(5), 49),
+            (Rectangle(4, 6), Rectangle(3, 5), 39),
+        ],
+    )
+    def test_rectangle_add_area(self, rectangle, some_figure, expected_area):
+        assert rectangle.add_area(some_figure) == expected_area
 
     def test_rectangle_add_area_invalid_object(self):
 
