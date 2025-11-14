@@ -19,13 +19,13 @@ def test_circle_area(radius, area):
 
 @pytest.mark.parametrize(
     ("radius", "perimeter"),
-    [
-       pytest.param(5, 31.42, id="integer"),
-       pytest.param(6.2, 38.96, id="float")],
+    [pytest.param(5, 31.42, id="integer"), pytest.param(6.2, 38.96, id="float")],
 )
 def test_rectangle_perimeter(radius, perimeter):
     c = Circle(radius)
-    assert (c.get_perimeter == perimeter), f"Perimeter for circle with radius {radius} should be {perimeter}"
+    assert (
+        c.get_perimeter == perimeter
+    ), f"Perimeter for circle with radius {radius} should be {perimeter}"
 
 
 @pytest.mark.parametrize(
@@ -41,18 +41,20 @@ def test_circle_invalid_sides(radius, expected_exception, text_exception: str):
 
 
 class TestCircleAddArea:
-    def test_circle_add_area(self):
 
-        circle = Circle(2)                     # площадь круга ≈ 12.566
-        triangle = Triangle(3, 4, 5)  # площадь треугольника = 6
-        rectangle = Rectangle(4, 6)      # площадь прямоугольника = 24
-        square = Square(5)                     # площадь квадрата = 25
-        another_circle = Circle(3)             # площадь второго круга ≈ 28.274
-
-        assert circle.add_area(triangle) == pytest.approx(18.57, abs=0.01)  # 12.566 + 6
-        assert circle.add_area(rectangle) == pytest.approx(36.57, abs=0.01)  # 12.566 + 24
-        assert circle.add_area(square) == pytest.approx(37.57, abs=0.01)    # 12.566... + 25
-        assert circle.add_area(another_circle) == pytest.approx(40.84, abs=0.01)  # 12.56 + 28.274
+    @pytest.mark.parametrize(
+        "circle",
+        "some_figure",
+        "expected_area",
+        [
+            (Circle(2), Triangle(3, 4, 5), 18.57),
+            (Circle(2), Rectangle(4, 6), 36.57),
+            (Circle(2), Square(5), 37.57),
+            (Circle(2), Circle(3), 40.84),
+        ],
+    )
+    def test_circle_add_area(self, circle, some_figure, expected_area):
+        assert circle.add_area(some_figure) == expected_area
 
     def test_circle_add_area_invalid_object(self):
 
